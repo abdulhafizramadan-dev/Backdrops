@@ -5,6 +5,7 @@ import com.backdrops.app.data.network.response.PhotoResponse
 import com.backdrops.app.domain.model.PhotoItem
 import com.backdrops.app.domain.model.PhotoItemType
 
+@JvmName("responseToDomain")
 fun List<PhotoResponse>.toDomains(): List<PhotoItem> = map {
     it.toDomain()
 }
@@ -20,6 +21,7 @@ fun PhotoResponse.toDomain(): PhotoItem {
     )
 }
 
+@JvmName("responseToEntities")
 fun List<PhotoResponse>.toEntities(type: PhotoItemType): List<PhotoEntity> = map {
     it.toEntity(type)
 }
@@ -33,5 +35,20 @@ fun PhotoResponse.toEntity(type: PhotoItemType): PhotoEntity {
         color = color ?: "",
         description = description,
         user = user?.name ?: ""
+    )
+}
+
+@JvmName("entityToDomain")
+fun List<PhotoEntity>.toDomains(): List<PhotoItem> = map {
+    it.toDomain()
+}
+
+fun PhotoEntity.toDomain(): PhotoItem {
+    return PhotoItem(
+        id = id,
+        photo = photo,
+        color = color,
+        description = description,
+        user = user
     )
 }

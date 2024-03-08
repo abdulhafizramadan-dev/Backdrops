@@ -10,6 +10,10 @@ import com.backdrops.app.data.local.entity.RemoteKey
 @Database(entities = [PhotoEntity::class, RemoteKey::class], version = 1)
 abstract class BackdropsDatabase : RoomDatabase() {
 
+    companion object {
+        const val DATABASE_NAME = "backdrops.db"
+    }
+
     abstract val photoDao: PhotoDao
     abstract val remoteKeyDao: RemoteKeyDao
 

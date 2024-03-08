@@ -9,7 +9,7 @@ import com.backdrops.app.domain.model.Resource
 import com.backdrops.app.domain.repository.PhotoRepository
 import com.backdrops.app.domain.usecase.PhotoUseCase
 
-class PhotoUseInteractor(
+class PhotoInteractor(
     private val repository: PhotoRepository
 ) : PhotoUseCase {
 
