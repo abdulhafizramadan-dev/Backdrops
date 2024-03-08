@@ -23,6 +23,9 @@ data class PhotoResponse(
 	val id: String? = null,
 
 	@field:SerializedName("user")
-	val user: UserResponse? = null
+	val user: UserResponse? = null,
+
+	@field:SerializedName("created_at")
+	val createdAt: String? = null,
 )
 

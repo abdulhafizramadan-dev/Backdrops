@@ -26,6 +26,8 @@ class DetailPhotoActivity : AppCompatActivity() {
 
         photo = intent.getStringExtra(EXTRA_PHOTO) ?: ""
 
+        binding.ivPhoto.transitionName = photo
+
         binding.ivPhoto.load(photo) {
             placeholder(R.drawable.placeholder_gallery)
             error(R.drawable.error_gallery)

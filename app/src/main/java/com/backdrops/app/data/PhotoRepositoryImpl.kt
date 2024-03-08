@@ -1,7 +1,6 @@
 package com.backdrops.app.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.map
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -21,8 +20,11 @@ import com.backdrops.app.domain.model.PhotoItem
 import com.backdrops.app.domain.model.PhotoItemType
 import com.backdrops.app.domain.model.Resource
 import com.backdrops.app.domain.repository.PhotoRepository
+import com.backdrops.app.util.toDate
 import com.backdrops.app.util.wrapEspressoIdlingResource
 import com.haroldadmin.cnradapter.NetworkResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 @ExperimentalPagingApi
 class PhotoRepositoryImpl(
@@ -30,13 +32,17 @@ class PhotoRepositoryImpl(
     private val service: UnsplashService
 ) : PhotoRepository {
 
-    override fun listPhotos(type: PhotoItemType): LiveData<Resource<List<PhotoItem>>> = liveData {
+    override fun listPhotos(
+        type: PhotoItemType,
+        page: Int,
+        perPage: Int
+    ): Flow<Resource<List<PhotoItem>>> = flow {
         wrapEspressoIdlingResource {
             emit(Resource.Loading)
             try {
                 val response = service.listPhotos(
-                    page = 1,
-                    perPage = 10,
+                    page = page,
+                    perPage = perPage,
                     orderBy = type.route
                 )
                 when (response) {
@@ -47,21 +53,17 @@ class PhotoRepositoryImpl(
                             dao.clearListPhoto(type)
                             dao.insertListPhoto(entities)
                         }
-                        val resource: LiveData<Resource<List<PhotoItem>>> = dao.listPhoto(type).map {
-                            Resource.Success(it.toDomains())
-                        }
-                        emitSource(resource)
+                        val domains = dao.listPhoto(type).sortedByDescending { it.createdAt.toDate() }.toDomains()
+                        emit(Resource.Success(data = domains))
                     }
                     is NetworkResponse.Error -> {
                         val message = response.body?.errors?.get(0) ?: response.error?.message ?: ""
-                        val resource: LiveData<Resource<List<PhotoItem>>> = database.photoDao.listPhoto(type).map {
-                            Resource.Error(data = it.toDomains(), message = message)
-                        }
-                        emitSource(resource)
+                        val domains = database.photoDao.listPhoto(type).sortedByDescending { it.createdAt.toDate() }.toDomains()
+                        emit(Resource.Error(data = domains, message = message))
                     }
                 }
             } catch (error: Exception) {
-                emit(Resource.Error(message = "fwe"))
+                emit(Resource.Error(message = error.message ?: ""))
             }
         }
     }

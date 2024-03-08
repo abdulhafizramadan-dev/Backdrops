@@ -18,6 +18,8 @@ data class PhotoItem(
 
 	val user: String = "",
 
+	val createdAt: String = "",
+
 	val isFavorite: Boolean = false
 
 )

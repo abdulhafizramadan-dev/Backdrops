@@ -4,6 +4,7 @@ import com.backdrops.app.data.local.entity.PhotoEntity
 import com.backdrops.app.data.network.response.PhotoResponse
 import com.backdrops.app.domain.model.PhotoItem
 import com.backdrops.app.domain.model.PhotoItemType
+import com.backdrops.app.util.toRelativeDateFormat
 
 @JvmName("responseToDomain")
 fun List<PhotoResponse>.toDomains(): List<PhotoItem> = map {
@@ -17,7 +18,8 @@ fun PhotoResponse.toDomain(): PhotoItem {
         photo = urls?.regular ?: "",
         color = color ?: "",
         description = description,
-        user = user?.name ?: ""
+        user = user?.name ?: "",
+        createdAt = (createdAt ?: "").toRelativeDateFormat()
     )
 }
 
@@ -34,7 +36,8 @@ fun PhotoResponse.toEntity(type: PhotoItemType): PhotoEntity {
         photo = urls?.regular ?: "",
         color = color ?: "",
         description = description,
-        user = user?.name ?: ""
+        user = user?.name ?: "",
+        createdAt = createdAt ?: ""
     )
 }
 
@@ -49,6 +52,8 @@ fun PhotoEntity.toDomain(): PhotoItem {
         photo = photo,
         color = color,
         description = description,
-        user = user
+        user = user,
+        createdAt = createdAt.toRelativeDateFormat(),
+        isFavorite = isFavorite
     )
 }

@@ -20,6 +20,8 @@ data class PhotoEntity(
 
     val user: String = "",
 
+    val createdAt: String = "",
+
     val isFavorite: Boolean = false
 )
 

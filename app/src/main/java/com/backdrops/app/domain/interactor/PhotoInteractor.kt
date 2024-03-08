@@ -8,13 +8,18 @@ import com.backdrops.app.domain.model.PhotoItemType
 import com.backdrops.app.domain.model.Resource
 import com.backdrops.app.domain.repository.PhotoRepository
 import com.backdrops.app.domain.usecase.PhotoUseCase
+import kotlinx.coroutines.flow.Flow
 
 class PhotoInteractor(
     private val repository: PhotoRepository
 ) : PhotoUseCase {
 
-    override fun listPhotos(type: PhotoItemType): LiveData<Resource<List<PhotoItem>>> {
-        return repository.listPhotos(type)
+    override fun listPhotos(
+        type: PhotoItemType,
+        page: Int,
+        perPage: Int
+    ): Flow<Resource<List<PhotoItem>>> {
+        return repository.listPhotos(type, page, perPage)
     }
 
     override fun listPhotosPagingData(type: PhotoItemType): LiveData<PagingData<PhotoItem>> {

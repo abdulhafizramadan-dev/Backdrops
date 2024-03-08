@@ -1,6 +1,5 @@
 package com.backdrops.app.data.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,7 +15,7 @@ interface PhotoDao {
     fun listPhotoPagingSource(type: PhotoItemType): PagingSource<Int, PhotoEntity>
 
     @Query("SELECT * FROM photoentity WHERE type = :type")
-    fun listPhoto(type: PhotoItemType): LiveData<List<PhotoEntity>>
+    suspend fun listPhoto(type: PhotoItemType): List<PhotoEntity>
 
     @Query("SELECT * FROM photoentity WHERE isFavorite = 1")
     fun listFavoritePhoto(): PagingSource<Int, PhotoEntity>

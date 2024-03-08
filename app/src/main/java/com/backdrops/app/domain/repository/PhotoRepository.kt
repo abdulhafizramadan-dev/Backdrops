@@ -6,10 +6,11 @@ import com.backdrops.app.domain.model.PhotoDetail
 import com.backdrops.app.domain.model.PhotoItem
 import com.backdrops.app.domain.model.PhotoItemType
 import com.backdrops.app.domain.model.Resource
+import kotlinx.coroutines.flow.Flow
 
 interface PhotoRepository {
 
-    fun listPhotos(type: PhotoItemType): LiveData<Resource<List<PhotoItem>>>
+    fun listPhotos(type: PhotoItemType, page: Int, perPage: Int): Flow<Resource<List<PhotoItem>>>
 
     fun listPhotosPagingData(type: PhotoItemType): LiveData<PagingData<PhotoItem>>
 
