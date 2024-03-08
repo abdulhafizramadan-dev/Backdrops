@@ -3,6 +3,7 @@ package com.backdrops.app.data.local.dao
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.backdrops.app.data.local.entity.PhotoEntity
@@ -20,7 +21,7 @@ interface PhotoDao {
     @Query("SELECT * FROM photoentity WHERE isFavorite = 1")
     fun listFavoritePhoto(): PagingSource<Int, PhotoEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertListPhoto(photos: List<PhotoEntity>)
 
     @Update

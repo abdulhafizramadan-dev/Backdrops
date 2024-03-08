@@ -12,7 +12,7 @@ interface PhotoRepository {
 
     fun listPhotos(type: PhotoItemType, page: Int, perPage: Int): Flow<Resource<List<PhotoItem>>>
 
-    fun listPhotosPagingData(type: PhotoItemType): LiveData<PagingData<PhotoItem>>
+    fun listPhotosPagingData(type: PhotoItemType): Flow<PagingData<PhotoItem>>
 
     fun searchPhotosPagingData(query: String, type: PhotoItemType): LiveData<PagingData<PhotoItem>>
 

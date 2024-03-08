@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_app"
-    app:startDestination="@id/galleryFragment">
+    app:startDestination="@id/popularFragment">
 
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.backdrops.app.presentation.gallery.GalleryFragment"
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/popularFragment"
+        android:name="com.backdrops.app.presentation.popular.PopularFragment"
+        android:label="fragment_popular"
+        tools:layout="@layout/fragment_popular" />
 </navigation>

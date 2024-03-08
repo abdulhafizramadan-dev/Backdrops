@@ -1,12 +1,10 @@
 package com.backdrops.app.data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.liveData
 import androidx.paging.map
 import androidx.room.withTransaction
 import com.backdrops.app.data.local.BackdropsDatabase
@@ -25,6 +23,7 @@ import com.backdrops.app.util.wrapEspressoIdlingResource
 import com.haroldadmin.cnradapter.NetworkResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 @ExperimentalPagingApi
 class PhotoRepositoryImpl(
@@ -68,12 +67,12 @@ class PhotoRepositoryImpl(
         }
     }
 
-    override fun listPhotosPagingData(type: PhotoItemType): LiveData<PagingData<PhotoItem>> {
+    override fun listPhotosPagingData(type: PhotoItemType): Flow<PagingData<PhotoItem>> {
         return Pager(
             config = PagingConfig(50),
             remoteMediator = PhotoRemoteMediator(service, database, type),
             pagingSourceFactory = { database.photoDao.listPhotoPagingSource(type) }
-        ).liveData.map { pagingData ->
+        ).flow.map { pagingData ->
             pagingData.map { it.toDomain() }
         }
     }

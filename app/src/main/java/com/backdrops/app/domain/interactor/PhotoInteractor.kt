@@ -22,7 +22,7 @@ class PhotoInteractor(
         return repository.listPhotos(type, page, perPage)
     }
 
-    override fun listPhotosPagingData(type: PhotoItemType): LiveData<PagingData<PhotoItem>> {
+    override fun listPhotosPagingData(type: PhotoItemType): Flow<PagingData<PhotoItem>> {
         return repository.listPhotosPagingData(type)
     }
 

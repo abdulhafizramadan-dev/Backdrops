@@ -5,6 +5,7 @@ import androidx.paging.ExperimentalPagingApi
 import com.backdrops.app.di.dataModule
 import com.backdrops.app.di.domainModule
 import com.backdrops.app.di.galleryModule
+import com.backdrops.app.di.popularModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -15,7 +16,7 @@ class BackdropsApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(applicationContext)
-            modules(domainModule, dataModule, galleryModule)
+            modules(domainModule, dataModule, galleryModule, popularModule)
         }
     }
 

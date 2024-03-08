@@ -1,7 +1,6 @@
 package com.backdrops.app.presentation.gallery
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,17 @@ import androidx.fragment.app.Fragment
 import com.backdrops.app.databinding.FragmentGalleryBinding
 import com.backdrops.app.domain.model.Resource
 import com.backdrops.app.ui.SectionGallery
+import com.backdrops.app.util.showContent
+import com.backdrops.app.util.showLoading
 import com.xwray.groupie.GroupieAdapter
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class GalleryFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
     private val binding: FragmentGalleryBinding get() = _binding!!
 
-    private val viewModel: GalleryViewModel by viewModel()
+    private val viewModel: GalleryViewModel by activityViewModel()
 
     private val groupieAdapter: GroupieAdapter by lazy {
         GroupieAdapter()
@@ -56,7 +57,7 @@ class GalleryFragment : Fragment() {
         viewModel.gallery.observe(viewLifecycleOwner) { resource ->
             groupieAdapter.clear()
             when (resource) {
-                Resource.Loading -> Log.d("TAG", "initObserver: Loading")
+                Resource.Loading -> binding.msvGallery.showLoading()
                 is Resource.Error -> {
                     val groupingData = resource.data?.groupBy { it.createdAt } ?: emptyMap()
                     groupingData.forEach { (date, photos) ->
@@ -64,6 +65,7 @@ class GalleryFragment : Fragment() {
                             SectionGallery(title = date, photos = photos)
                         )
                     }
+                    binding.msvGallery.showContent()
                 }
                 is Resource.Success -> {
                     val groupingData = resource.data.groupBy { it.createdAt }
@@ -72,6 +74,7 @@ class GalleryFragment : Fragment() {
                             SectionGallery(title = date, photos = photos)
                         )
                     }
+                    binding.msvGallery.showContent()
                 }
             }
         }
