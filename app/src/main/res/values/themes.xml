@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Backdrops" parent="Base.Theme.Backdrops" />
+
+    <style name="Theme.Backdrops.FullScreen" parent="Base.Theme.Backdrops">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>

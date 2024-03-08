@@ -51,7 +51,7 @@ dependencies {
     implementation("com.github.lisawray.groupie:groupie:2.10.1")
     implementation("com.github.lisawray.groupie:groupie-viewbinding:2.10.1")
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("io.coil-kt:coil:2.6.0")
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
@@ -66,6 +66,8 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 
     implementation("com.airbnb.android:lottie:6.1.0")
+
+    implementation("com.jsibbold:zoomage:1.3.1")
 
     // Network Dependencies
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
